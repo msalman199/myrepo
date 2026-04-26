@@ -1,0 +1,517 @@
+
+
+
+Lab 21: Static Charts with Matplotlib
+Objectives
+By the end of this lab, students will be able to:
+
+• Create line plots, bar charts, and scatter plots using Matplotlib • Customize chart elements including labels, titles, and axes • Apply proper formatting and styling to make charts more readable • Save plots as image files in various formats • Understand when to use different chart types for data visualization • Implement best practices for creating professional-looking static charts
+
+Prerequisites
+Before starting this lab, students should have:
+
+• Basic understanding of Python programming concepts (variables, lists, functions) • Familiarity with Python data types and basic operations • Basic knowledge of working with the command line interface • Understanding of coordinate systems and basic mathematical concepts
+
+Ready-to-Use Cloud Machines
+Al Nafi provides Linux-based cloud machines with all necessary tools pre-installed. Simply click Start Lab to access your environment - no need to build your own virtual machine or install software locally.
+
+Your cloud machine includes: • Python 3.x with pip package manager • Matplotlib library pre-installed • Jupyter Notebook environment • Sample datasets for practice
+
+Lab Tasks
+Task 1: Setting Up the Environment and Creating Line Plots
+Subtask 1.1: Import Required Libraries
+First, let's import the necessary libraries and set up our working environment.
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Set up the plotting style
+plt.style.use('default')
+print("Matplotlib version:", plt.__version__)
+Subtask 1.2: Create Your First Line Plot
+Let's create a simple line plot to visualize temperature changes over a week.
+
+# Sample data: Daily temperatures for a week
+days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+temperatures = [22, 25, 23, 27, 29, 31, 28]
+
+# Create a line plot
+plt.figure(figsize=(10, 6))
+plt.plot(days, temperatures, marker='o', linewidth=2, markersize=8)
+
+# Add labels and title
+plt.title('Daily Temperature Throughout the Week', fontsize=16, fontweight='bold')
+plt.xlabel('Days of the Week', fontsize=12)
+plt.ylabel('Temperature (°C)', fontsize=12)
+
+# Rotate x-axis labels for better readability
+plt.xticks(rotation=45)
+
+# Add grid for better readability
+plt.grid(True, alpha=0.3)
+
+# Adjust layout to prevent label cutoff
+plt.tight_layout()
+
+# Display the plot
+plt.show()
+Subtask 1.3: Create Multiple Line Plots
+Now let's create a more complex line plot with multiple data series.
+
+# Sample data: Temperature comparison between two cities
+days_numeric = list(range(1, 8))
+city_a_temps = [22, 25, 23, 27, 29, 31, 28]
+city_b_temps = [20, 22, 21, 24, 26, 28, 25]
+
+# Create multiple line plots
+plt.figure(figsize=(12, 7))
+plt.plot(days_numeric, city_a_temps, marker='o', label='City A', linewidth=2, color='red')
+plt.plot(days_numeric, city_b_temps, marker='s', label='City B', linewidth=2, color='blue')
+
+# Customize the plot
+plt.title('Temperature Comparison: City A vs City B', fontsize=16, fontweight='bold')
+plt.xlabel('Day of Week', fontsize=12)
+plt.ylabel('Temperature (°C)', fontsize=12)
+plt.legend(fontsize=12)
+plt.grid(True, alpha=0.3)
+
+# Set axis limits
+plt.xlim(0.5, 7.5)
+plt.ylim(15, 35)
+
+plt.tight_layout()
+plt.show()
+Task 2: Creating Bar Charts
+Subtask 2.1: Simple Vertical Bar Chart
+Let's create a bar chart to visualize sales data for different products.
+
+# Sample data: Monthly sales by product
+products = ['Laptops', 'Smartphones', 'Tablets', 'Headphones', 'Cameras']
+sales = [150, 280, 95, 200, 75]
+
+# Create a vertical bar chart
+plt.figure(figsize=(10, 6))
+bars = plt.bar(products, sales, color=['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7'])
+
+# Add value labels on top of bars
+for bar in bars:
+    height = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width()/2., height + 5,
+             f'{height}', ha='center', va='bottom', fontsize=10)
+
+# Customize the chart
+plt.title('Monthly Product Sales', fontsize=16, fontweight='bold')
+plt.xlabel('Products', fontsize=12)
+plt.ylabel('Units Sold', fontsize=12)
+plt.xticks(rotation=45)
+plt.grid(axis='y', alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+Subtask 2.2: Horizontal Bar Chart
+Sometimes horizontal bar charts are more readable, especially with long category names.
+
+# Sample data: Customer satisfaction ratings
+categories = ['Product Quality', 'Customer Service', 'Delivery Speed', 'Website Experience', 'Value for Money']
+ratings = [4.2, 3.8, 4.5, 4.0, 3.9]
+
+# Create a horizontal bar chart
+plt.figure(figsize=(10, 6))
+bars = plt.barh(categories, ratings, color='skyblue', edgecolor='navy', linewidth=1)
+
+# Add value labels at the end of bars
+for i, bar in enumerate(bars):
+    width = bar.get_width()
+    plt.text(width + 0.05, bar.get_y() + bar.get_height()/2,
+             f'{ratings[i]:.1f}', ha='left', va='center', fontsize=10)
+
+# Customize the chart
+plt.title('Customer Satisfaction Ratings', fontsize=16, fontweight='bold')
+plt.xlabel('Rating (out of 5)', fontsize=12)
+plt.ylabel('Categories', fontsize=12)
+plt.xlim(0, 5)
+plt.grid(axis='x', alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+Subtask 2.3: Grouped Bar Chart
+Let's create a grouped bar chart to compare data across multiple categories.
+
+# Sample data: Quarterly sales comparison
+quarters = ['Q1', 'Q2', 'Q3', 'Q4']
+product_a_sales = [120, 150, 180, 200]
+product_b_sales = [100, 130, 160, 170]
+product_c_sales = [80, 110, 140, 160]
+
+# Set up the bar positions
+x = np.arange(len(quarters))
+width = 0.25
+
+# Create grouped bars
+plt.figure(figsize=(12, 7))
+plt.bar(x - width, product_a_sales, width, label='Product A', color='#FF6B6B')
+plt.bar(x, product_b_sales, width, label='Product B', color='#4ECDC4')
+plt.bar(x + width, product_c_sales, width, label='Product C', color='#45B7D1')
+
+# Customize the chart
+plt.title('Quarterly Sales Comparison by Product', fontsize=16, fontweight='bold')
+plt.xlabel('Quarter', fontsize=12)
+plt.ylabel('Sales (in thousands)', fontsize=12)
+plt.xticks(x, quarters)
+plt.legend()
+plt.grid(axis='y', alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+Task 3: Creating Scatter Plots
+Subtask 3.1: Basic Scatter Plot
+Scatter plots are excellent for showing relationships between two variables.
+
+# Sample data: Student study hours vs exam scores
+study_hours = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+exam_scores = [45, 55, 60, 65, 70, 75, 80, 85, 90, 92, 95]
+
+# Create a scatter plot
+plt.figure(figsize=(10, 6))
+plt.scatter(study_hours, exam_scores, color='red', alpha=0.7, s=100)
+
+# Customize the plot
+plt.title('Relationship Between Study Hours and Exam Scores', fontsize=16, fontweight='bold')
+plt.xlabel('Study Hours per Week', fontsize=12)
+plt.ylabel('Exam Score (%)', fontsize=12)
+plt.grid(True, alpha=0.3)
+
+# Set axis limits
+plt.xlim(0, 13)
+plt.ylim(40, 100)
+
+plt.tight_layout()
+plt.show()
+Subtask 3.2: Scatter Plot with Different Colors and Sizes
+Let's create a more complex scatter plot with varying colors and sizes.
+
+# Sample data: Company performance metrics
+companies = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+revenue = [100, 150, 200, 120, 180, 250, 300, 90, 160, 220]
+profit_margin = [10, 15, 20, 8, 18, 25, 30, 5, 12, 22]
+employee_count = [50, 75, 100, 60, 85, 120, 150, 40, 70, 95]
+
+# Create scatter plot with varying sizes and colors
+plt.figure(figsize=(12, 8))
+scatter = plt.scatter(revenue, profit_margin, 
+                     s=[x*3 for x in employee_count],  # Size based on employee count
+                     c=employee_count,  # Color based on employee count
+                     cmap='viridis', 
+                     alpha=0.7,
+                     edgecolors='black',
+                     linewidth=1)
+
+# Add colorbar
+plt.colorbar(scatter, label='Employee Count')
+
+# Add labels for each point
+for i, company in enumerate(companies):
+    plt.annotate(company, (revenue[i], profit_margin[i]), 
+                xytext=(5, 5), textcoords='offset points', fontsize=10)
+
+# Customize the plot
+plt.title('Company Performance: Revenue vs Profit Margin', fontsize=16, fontweight='bold')
+plt.xlabel('Revenue (in millions)', fontsize=12)
+plt.ylabel('Profit Margin (%)', fontsize=12)
+plt.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+Task 4: Advanced Customization
+Subtask 4.1: Customizing Colors and Styles
+Let's explore different ways to customize our plots.
+
+# Sample data
+months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+sales_2022 = [100, 120, 140, 110, 160, 180]
+sales_2023 = [110, 130, 150, 125, 170, 190]
+
+# Create a customized plot
+plt.figure(figsize=(12, 7))
+
+# Plot with custom styles
+plt.plot(months, sales_2022, 
+         marker='o', 
+         linestyle='--', 
+         linewidth=3, 
+         markersize=10,
+         color='#E74C3C',
+         markerfacecolor='white',
+         markeredgecolor='#E74C3C',
+         markeredgewidth=2,
+         label='2022 Sales')
+
+plt.plot(months, sales_2023, 
+         marker='s', 
+         linestyle='-', 
+         linewidth=3, 
+         markersize=10,
+         color='#3498DB',
+         markerfacecolor='white',
+         markeredgecolor='#3498DB',
+         markeredgewidth=2,
+         label='2023 Sales')
+
+# Customize the plot appearance
+plt.title('Sales Comparison: 2022 vs 2023', fontsize=18, fontweight='bold', pad=20)
+plt.xlabel('Month', fontsize=14, fontweight='bold')
+plt.ylabel('Sales (in thousands)', fontsize=14, fontweight='bold')
+
+# Customize legend
+plt.legend(fontsize=12, loc='upper left', frameon=True, shadow=True)
+
+# Customize grid
+plt.grid(True, linestyle=':', alpha=0.7, color='gray')
+
+# Set background color
+plt.gca().set_facecolor('#F8F9FA')
+
+plt.tight_layout()
+plt.show()
+Subtask 4.2: Adding Annotations and Text
+Learn how to add annotations and text to make your plots more informative.
+
+# Sample data: Stock price over time
+days = list(range(1, 11))
+stock_price = [100, 102, 98, 105, 110, 108, 115, 112, 118, 120]
+
+plt.figure(figsize=(12, 7))
+plt.plot(days, stock_price, marker='o', linewidth=2, markersize=8, color='green')
+
+# Add annotations for significant points
+plt.annotate('Highest Point', 
+             xy=(10, 120), 
+             xytext=(8, 125),
+             arrowprops=dict(arrowstyle='->', color='red', lw=2),
+             fontsize=12,
+             color='red',
+             fontweight='bold')
+
+plt.annotate('Lowest Point', 
+             xy=(3, 98), 
+             xytext=(5, 95),
+             arrowprops=dict(arrowstyle='->', color='blue', lw=2),
+             fontsize=12,
+             color='blue',
+             fontweight='bold')
+
+# Add text box with statistics
+textstr = f'Max: ${max(stock_price)}\nMin: ${min(stock_price)}\nAvg: ${np.mean(stock_price):.1f}'
+props = dict(boxstyle='round', facecolor='wheat', alpha=0.8)
+plt.text(0.02, 0.98, textstr, transform=plt.gca().transAxes, fontsize=10,
+         verticalalignment='top', bbox=props)
+
+plt.title('Stock Price Movement Over 10 Days', fontsize=16, fontweight='bold')
+plt.xlabel('Day', fontsize=12)
+plt.ylabel('Stock Price ($)', fontsize=12)
+plt.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+Task 5: Saving Plots as Image Files
+Subtask 5.1: Save in Different Formats
+Learn how to save your plots in various image formats.
+
+# Create a sample plot to save
+plt.figure(figsize=(10, 6))
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+
+plt.plot(x, y, linewidth=2, color='blue')
+plt.title('Sine Wave', fontsize=16, fontweight='bold')
+plt.xlabel('X values', fontsize=12)
+plt.ylabel('Y values', fontsize=12)
+plt.grid(True, alpha=0.3)
+
+# Save in different formats
+plt.savefig('sine_wave.png', dpi=300, bbox_inches='tight')
+plt.savefig('sine_wave.pdf', bbox_inches='tight')
+plt.savefig('sine_wave.svg', bbox_inches='tight')
+plt.savefig('sine_wave.jpg', dpi=300, bbox_inches='tight')
+
+print("Plot saved in multiple formats:")
+print("- sine_wave.png (high resolution)")
+print("- sine_wave.pdf (vector format)")
+print("- sine_wave.svg (scalable vector)")
+print("- sine_wave.jpg (compressed)")
+
+plt.show()
+Subtask 5.2: Batch Save Multiple Plots
+Create a function to generate and save multiple plots automatically.
+
+def create_and_save_plots():
+    """Function to create and save multiple plots"""
+    
+    # Data for different plots
+    plot_data = {
+        'sales_chart': {
+            'type': 'bar',
+            'x': ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+            'y': [100, 120, 140, 110, 160],
+            'title': 'Monthly Sales',
+            'xlabel': 'Month',
+            'ylabel': 'Sales ($1000s)'
+        },
+        'temperature_line': {
+            'type': 'line',
+            'x': list(range(1, 8)),
+            'y': [22, 25, 23, 27, 29, 31, 28],
+            'title': 'Weekly Temperature',
+            'xlabel': 'Day',
+            'ylabel': 'Temperature (°C)'
+        },
+        'score_scatter': {
+            'type': 'scatter',
+            'x': [2, 4, 6, 8, 10, 12],
+            'y': [45, 60, 70, 80, 90, 95],
+            'title': 'Study Hours vs Scores',
+            'xlabel': 'Study Hours',
+            'ylabel': 'Score (%)'
+        }
+    }
+    
+    for plot_name, data in plot_data.items():
+        plt.figure(figsize=(10, 6))
+        
+        if data['type'] == 'bar':
+            plt.bar(data['x'], data['y'], color='skyblue')
+        elif data['type'] == 'line':
+            plt.plot(data['x'], data['y'], marker='o', linewidth=2)
+        elif data['type'] == 'scatter':
+            plt.scatter(data['x'], data['y'], s=100, alpha=0.7)
+        
+        plt.title(data['title'], fontsize=16, fontweight='bold')
+        plt.xlabel(data['xlabel'], fontsize=12)
+        plt.ylabel(data['ylabel'], fontsize=12)
+        plt.grid(True, alpha=0.3)
+        plt.tight_layout()
+        
+        # Save the plot
+        filename = f"{plot_name}.png"
+        plt.savefig(filename, dpi=300, bbox_inches='tight')
+        print(f"Saved: {filename}")
+        
+        plt.show()
+
+# Execute the function
+create_and_save_plots()
+Task 6: Creating a Comprehensive Dashboard
+Subtask 6.1: Multiple Subplots in One Figure
+Let's create a dashboard with multiple charts in a single figure.
+
+# Sample data for dashboard
+months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+revenue = [100, 120, 140, 110, 160, 180]
+expenses = [80, 90, 100, 85, 120, 130]
+customers = [500, 550, 600, 520, 650, 700]
+satisfaction = [4.2, 4.1, 4.3, 4.0, 4.4, 4.5]
+
+# Create a figure with subplots
+fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(15, 10))
+
+# Plot 1: Revenue vs Expenses (Line plot)
+ax1.plot(months, revenue, marker='o', label='Revenue', linewidth=2, color='green')
+ax1.plot(months, expenses, marker='s', label='Expenses', linewidth=2, color='red')
+ax1.set_title('Revenue vs Expenses', fontsize=14, fontweight='bold')
+ax1.set_ylabel('Amount ($1000s)')
+ax1.legend()
+ax1.grid(True, alpha=0.3)
+
+# Plot 2: Customer Count (Bar chart)
+ax2.bar(months, customers, color='skyblue', edgecolor='navy')
+ax2.set_title('Monthly Customer Count', fontsize=14, fontweight='bold')
+ax2.set_ylabel('Number of Customers')
+ax2.grid(axis='y', alpha=0.3)
+
+# Plot 3: Customer Satisfaction (Horizontal bar)
+ax3.barh(months, satisfaction, color='orange')
+ax3.set_title('Customer Satisfaction Rating', fontsize=14, fontweight='bold')
+ax3.set_xlabel('Rating (out of 5)')
+ax3.grid(axis='x', alpha=0.3)
+
+# Plot 4: Revenue vs Customer Satisfaction (Scatter)
+ax4.scatter(satisfaction, revenue, s=100, alpha=0.7, color='purple')
+ax4.set_title('Revenue vs Satisfaction', fontsize=14, fontweight='bold')
+ax4.set_xlabel('Satisfaction Rating')
+ax4.set_ylabel('Revenue ($1000s)')
+ax4.grid(True, alpha=0.3)
+
+# Add a main title for the entire dashboard
+fig.suptitle('Business Performance Dashboard', fontsize=18, fontweight='bold', y=0.98)
+
+# Adjust layout
+plt.tight_layout()
+plt.subplots_adjust(top=0.93)
+
+# Save the dashboard
+plt.savefig('business_dashboard.png', dpi=300, bbox_inches='tight')
+print("Dashboard saved as 'business_dashboard.png'")
+
+plt.show()
+Troubleshooting Tips
+Common Issues and Solutions
+Issue 1: Plots not displaying
+
+# Solution: Make sure to call plt.show()
+plt.plot([1, 2, 3], [1, 4, 9])
+plt.show()  # Don't forget this!
+Issue 2: Labels getting cut off
+
+# Solution: Use tight_layout() or adjust margins
+plt.tight_layout()
+# or
+plt.subplots_adjust(bottom=0.15, left=0.15)
+Issue 3: Low resolution saved images
+
+# Solution: Specify DPI when saving
+plt.savefig('my_plot.png', dpi=300, bbox_inches='tight')
+Issue 4: Overlapping text in plots
+
+# Solution: Rotate labels or adjust font size
+plt.xticks(rotation=45)
+# or
+plt.xticks(fontsize=10)
+Best Practices Checklist
+Always include meaningful titles and axis labels
+Use appropriate chart types for your data
+Keep color schemes consistent and accessible
+Add legends when plotting multiple data series
+Use grid lines to improve readability
+Save plots in appropriate formats (PNG for web, PDF for print)
+Test your plots with different data ranges
+Consider your audience when choosing colors and fonts
+Conclusion
+Congratulations! You have successfully completed Lab 21 on Static Charts with Matplotlib. Throughout this lab, you have accomplished the following:
+
+Key Achievements:
+
+• Mastered Basic Plot Types: You learned to create line plots, bar charts, and scatter plots - the fundamental building blocks of data visualization
+
+• Developed Customization Skills: You can now customize colors, styles, labels, titles, and axes to create professional-looking charts
+
+• Learned Advanced Techniques: You explored annotations, multiple subplots, and dashboard creation to present complex data effectively
+
+• Gained File Management Skills: You can save plots in various formats (PNG, PDF, SVG, JPG) with appropriate resolution settings
+
+Why This Matters:
+
+Data visualization is crucial in today's data-driven world. The skills you've developed enable you to:
+
+Communicate Insights Effectively: Transform raw data into clear, understandable visual stories
+Support Decision Making: Help stakeholders quickly grasp trends, patterns, and relationships in data
+Create Professional Reports: Generate publication-ready charts for presentations, reports, and documentation
+Build Interactive Dashboards: Lay the foundation for more advanced visualization projects
+Next Steps:
+
+With these foundational skills in static chart creation, you're well-prepared to explore:
+
+Interactive visualizations with Plotly
+Advanced statistical plots with Seaborn
+Web-based dashboards with Dash or Streamlit
+Integration with data analysis libraries like Pandas
+The matplotlib skills you've learned today form the backbone of Python data visualization and will serve you well in data science, business analysis, research, and many other fields where clear data communication is essential.
